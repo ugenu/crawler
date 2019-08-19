@@ -1,0 +1,26 @@
+{
+  "name": "@ugenu/crawler",
+  "version": "1.0.0",
+  "description": "a middleware-based module for nightmare",
+  "main": "dist/crawler.js",
+  "scripts": {
+    "test": "nodemon -e ts --exec \"jest --verbose\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/async": "^3.0.1",
+    "@types/extend": "^3.0.1",
+    "@types/jest": "^24.0.18",
+    "@types/nightmare": "^2.10.4",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "async": "^3.1.0",
+    "extend": "^3.0.2",
+    "moment": "^2.24.0",
+    "nightmare": "^3.0.2"
+  }
+}
