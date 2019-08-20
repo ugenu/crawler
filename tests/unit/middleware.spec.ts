@@ -9,7 +9,17 @@ describe("Middleware", function(){
     assert(middleware.instructions);
   });
 
-  describe(".use(instruction)", function(){
+  describe(".import(middleware: Middleware)", function(){
+    it('should import the instructions from one middleware to another', function(){
+      let a = new Middleware();
+      let b = new Middleware();
+      b.use(function(){});
+      a.import(b);
+      assert.equal(a.length, 1);
+    });
+  });
+
+  describe(".use(instruction: MiddlewareInstruction)", function(){
     it('should add the instruction to the middleware instructions', function(){
       let middleware = new Middleware();
       middleware.use(function(){});
@@ -25,7 +35,7 @@ describe("Middleware", function(){
     });
   });
 
-  describe(".use(instructions)", function(){
+  describe(".use(instructions: MiddlewareInstruction[])", function(){
     it('should add the list of instructions to the middleware instructions', function(){
       let middleware = new Middleware();
       //@ts-ignore
@@ -38,6 +48,38 @@ describe("Middleware", function(){
       assert.throws(function(){
         //@ts-ignore
         middleware.use([function(){}, 'one']);
+      }, 'shouldThrow')
+    });
+  });
+
+  describe(".before(instruction: MiddlewareInstruction)", function(){
+    it('should add the instruction to the beginning of the middleware instructions', function(){
+      let middleware = new Middleware();
+      middleware.before(function(){});
+      assert(middleware.instructions.length > 0);
+    });
+
+    it('should throw an error if we do not pass in a function', function(){
+      let middleware = new Middleware();
+      assert.throws(function(){
+        //@ts-ignore
+        middleware.before('string');
+      }, 'shouldThrow')
+    });
+  });
+
+  describe(".before(instructions: MiddlewareInstruction[])", function(){
+    it('should add the instruction to the beginning of the middleware instructions', function(){
+      let middleware = new Middleware();
+      middleware.before([function(){}, function(){}]);
+      assert(middleware.instructions.length > 0);
+    });
+
+    it('should throw an error if we do not pass in a function', function(){
+      let middleware = new Middleware();
+      assert.throws(function(){
+        //@ts-ignore
+        middleware.before([function(){}, 'string']);
       }, 'shouldThrow')
     });
   });
