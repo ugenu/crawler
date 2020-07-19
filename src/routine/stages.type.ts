@@ -1,0 +1,1 @@
+export type Stages = 'setup' | 'crawl' | 'paginate' | 'teardown';
