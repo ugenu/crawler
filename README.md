@@ -12,6 +12,7 @@
 * [Events](#events)
 * [Requesting User Intervention](#requesting-user-intervention)
 * [Selectorizor](#selectorizor)
+* [Donate](#donate)
 * [License](#license)
 
 ## Installation
@@ -205,8 +206,6 @@ console.log(results);
 ## Inject Targets
 Crawler lets you specify javascript targets to inject if and only if they satisfy a truth test. This truth test will be run inside the browser scope, and falsy values mean that the target WILL be injected.
 
-***jQuery is injected by default for Selectorizor, and will (probably) be removed in future updates***
-
 ```ts
   let targets: Target[] = [
     {
@@ -323,6 +322,9 @@ The instruction will tell how Selectorizor should get the information from each 
 
 `fn: function` - Runs a function to transform the value that Selectorizor has returned from the previous options. If using `iterate`, it will perform a `map` on all items.
 
+## Donate
+If you find this open-source project useful, consider donating a cup of coffee to keep the good code coming!
+BTC: 1HXveyHG5Z3UXnqh2ykFwri3iH87VdMbvi
 
 ## License
 ```

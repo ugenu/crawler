@@ -129,23 +129,7 @@ export class Context<T> extends EventEmitter {
    * injects the targets that were created during construction
    */
   async injectTargets(): Promise<number> {
-    let targets = [...this.inject];
-
-    logger.verbose('adding jquery to injection targets');
-    
-    targets.push({
-      src: require.resolve('jquery'),
-      name: 'jQuery',
-      test: function(){
-        //@ts-ignore
-        window.noGlobal = false;
-        //@ts-ignore
-        let exists = typeof window.jQuery !== "undefined";
-        return exists;
-      }
-    });
-
-    return await Inject.Inject(targets, this);
+    return await Inject.Inject(this.inject, this);
   }
 
   /**
