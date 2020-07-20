@@ -1,8 +1,7 @@
 import * as Context from "../context.class";
 import Options from "./options.interface";
-import $, { } from "jquery";
 import Logger from '@ugenu.io/logger'
-import { ElectrolizerBus } from "@ugenu.io/electrolizer";
+
 
 const logger = Logger(['crawler', 'context', 'selectorizor'], process.env.DEBUG ? "debug" : "info");
 
@@ -15,16 +14,15 @@ export async function Selectorizor<O, C, R>(options: Options, context: Context.C
     instruction.fn = instruction.fn ? String(instruction.fn) : false;
   }
 
-  
   return await context.browser.evaluate(function(selectorizor: Options){
-    //@ts-ignore
-    let $ = window.$ as JQueryStatic;
-    let root = $(selectorizor.root);
+
+    let root = document.querySelectorAll(selectorizor.root);
     let results: any[] = [];
 
-    root.each(function(i, e){
-      //@ts-ignore
-      let dom = window.$(e);
+    root.forEach(function(e, i){
+      
+      let dom = e;
+
       let result: {[prop: string]: any} = {};
 
       for(let key in selectorizor.selectors){
@@ -33,28 +31,37 @@ export async function Selectorizor<O, C, R>(options: Options, context: Context.C
         let useHtml = instructions.html ? instructions.html : false;
 
         if(instructions.selector && !instructions.attr){
-          let el = dom.find(instructions.selector);
-          let text = el.text() ? el.text() : "";
-          let html = el.html() ? el.html() : "";
-          let value = useHtml ? html : text;
-          value = useTrim ? $.trim(value) : value;
-          result[key] = value;
+          let el = dom.querySelector(instructions.selector);
+          if(el){
+            let text = el.textContent ? el.textContent : "";
+            let html = el.innerHTML ? el.innerHTML : "";
+            let value = useHtml ? html : text;
+            value = useTrim ? value.trim() : value;
+            result[key] = value;
+          }
         }
 
         if(instructions.selector && instructions.attr){
-          result[key] = dom.find(instructions.selector).attr(instructions.attr);
+          let el = dom.querySelector(instructions.selector);
+          if(el){
+            result[key] = el.getAttribute(instructions.attr);
+          }
         }
 
         if(instructions.iterate){
-          //@ts-ignore
-          result[key] = dom.find(instructions.iterate).map(function(i, e){
-            let el = $(e);
-            let text = el.text() ? el.text() : "";
-            let html = el.html() ? el.html() : "";
-            let value = useHtml ? html : text;
-            value = useTrim ? $.trim(value) : value;
-            return value;
-          }).get();
+          let els = dom.querySelectorAll(instructions.iterate);
+          
+          let value: string[] = [];
+
+          els.forEach((el, i) => {
+            let text = el.textContent ? el.textContent : "";
+            let html = el.innerHTML ? el.innerHTML : "";
+            let innerValue = useHtml ? html : text;
+            innerValue = useTrim ? innerValue.trim() : innerValue;
+            value.push(innerValue);
+          });
+
+          result[key] = value;
         }
 
         if(instructions.fn){
