@@ -1,6 +1,6 @@
 {
   "name": "@ugenu.io/crawler",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "a module used for scraping with either an electron browser (webview, BrowserWindow, BrowserView) or http requests (axios)",
   "main": "dist/index.js",
   "scripts": {
