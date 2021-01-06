@@ -51,7 +51,7 @@
   "dependencies": {
     "@ugenu.io/electrolizer": "^1.0.3",
     "@ugenu.io/logger": "^1.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3"
   }
 }
